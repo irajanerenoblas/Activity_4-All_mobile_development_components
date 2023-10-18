@@ -1,17 +1,9 @@
-import * as React from 'react-native';
-import { PaperProvider, Text} from 'react-native-paper';
-import { View, Image } from 'react-native';
+import React, {useState} from 'react';
+import { PaperProvider} from 'react-native-paper';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed Screen</Text>
-    </View>
-  );
-}
+import { styles } from './style/Styles.js';
 
 function Article() {
   return (
@@ -54,16 +46,31 @@ const CustomDrawer = props => {
     </View>
   );
 };
-function MyDrawer() {
+
+
+export default function App({ navigation }) {
+
+  function Boxx() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={()=> navigation.navigate('One')}>
+          <View style={styles.box}>
+            <Text styles={{color: 'white'}}>ActivityIndicator</Text>
+          </View>
+        </TouchableOpacity>
+
+      </View>
+    );
+  }
+
+  function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={{headerStyle:{backgroundColor: '#5D12D2', }, headerTintColor: 'white'}} >
-      <Drawer.Screen name="Mobile Components" component={Feed} />
+      <Drawer.Screen name="Mobile Components" component={Boxx} />
       <Drawer.Screen name="About" component={Article} />
     </Drawer.Navigator>
   );
 }
-
-export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
