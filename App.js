@@ -1,18 +1,36 @@
 import React, {useState} from 'react';
-import { PaperProvider} from 'react-native-paper';
+import { PaperProvider, Button} from 'react-native-paper';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { styles } from './style/Styles.js';
+import TouchSn from './screen/actInd.js';
+import LottieView from 'lottie-react-native';
+import * as Speech from 'expo-speech';
+import Two from './screen/badge.js';
+import Three from './screen/banner.js';
 
+
+
+
+
+
+export default function App({ navigation }) {
+  
+  const speak = () => {
+    Speech.speak(`Hi, Ira Jane Reboblas!`, {
+      language: "tl-PH",
+    });
+  };
+  speak();
+    
 function Article() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Article Screen</Text>
+      <TouchSn/>
     </View>
   );
 }
-
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = props => {
@@ -47,18 +65,26 @@ const CustomDrawer = props => {
   );
 };
 
-
-export default function App({ navigation }) {
-
-  function Boxx() {
+  function Main() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={()=> navigation.navigate('One')}>
-          <View style={styles.box}>
-            <Text styles={{color: 'white'}}>ActivityIndicator</Text>
-          </View>
-        </TouchableOpacity>
+        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#5D12D2'}}>Welcome to Mobile Components</Text>
 
+        <LottieView
+        speed={0.5}
+        autoPlay
+        style={{
+            width: 300,
+            height: 300,
+        }}
+        source={require("./assets/typedod.json")}
+        />
+        
+        <Text style={{fontSize: 18}}>Activity 4: All Mobile Components</Text>
+
+        <Button marginTop={20} icon="cards" mode="contained" buttonColor='#5D12D2' onPress={() => navigation.openDrawer()}>
+        Get Started
+        </Button>
       </View>
     );
   }
@@ -66,8 +92,10 @@ export default function App({ navigation }) {
   function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={{headerStyle:{backgroundColor: '#5D12D2', }, headerTintColor: 'white'}} >
-      <Drawer.Screen name="Mobile Components" component={Boxx} />
-      <Drawer.Screen name="About" component={Article} />
+      <Drawer.Screen name="Mobile Components" component={Main} />
+      <Drawer.Screen name="Avatar" component={Article} />
+      <Drawer.Screen name="Badge" component={Two} />
+      <Drawer.Screen name="Banner" component={Three} />
     </Drawer.Navigator>
   );
 }
